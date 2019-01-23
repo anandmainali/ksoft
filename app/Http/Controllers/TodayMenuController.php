@@ -58,14 +58,47 @@ class TodayMenuController extends Controller
 
     public function getAddToCart(Request $request, $id)
     {
-        dd('hello');
         $item = FoodItem::find($id);
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
         $cart->add($item,$item->id);
 
         $request->session()->put('cart', $cart);
-       // dd($request->session()->get('cart'));
+        //($request->session()->get('cart'));
+        return back();
+    }
+
+    public function getCartItems()
+    {
+        if(!Session::has('cart')){
+            return view($this->path.'cartItems');
+        }
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        
+        return view($this->path.'cartItems',['items'=>$cart->items,'totalPrice'=> $cart->totalPrice]);
+    }
+
+    public function getReduceByOne($id) {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->reduceByOne($id);
+        if (count($cart->items) > 0) {
+            Session::put('cart', $cart);
+        } else {
+            Session::forget('cart');
+        }
+        return back();
+    }
+    public function getRemoveItem($id) {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->removeItem($id);
+        if (count($cart->items) > 0) {
+            Session::put('cart', $cart);
+        } else {
+            Session::forget('cart');
+        }
         return back();
     }
 }

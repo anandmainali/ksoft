@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth','prefix' => config('dashboard.prefix')], fu
             Route::post('updatePassword/{id}', 'ProfileUpdateController@updatePassword')->name('updatePassword');
 
             //User Status Update
-            Route::get('users/{$id}/status', 'UserController@updateStatus')->name('users.updateStatus');
+            Route::get('users/{id}/status', 'UserController@updateStatus')->name('users.updateStatus');
 
             //Users Resource
             Route::resource('users', 'UserController');
@@ -61,7 +61,10 @@ Route::group(['middleware' => 'auth','prefix' => config('dashboard.prefix')], fu
             Route::get('viewTodayMenu','TodayMenuController@viewTodayMenu')->name('viewTodayMenu');
 
             //Cart System
-            Route::get('addToCart/{$id}','TodayMenuController@getAddToCart')->name('addToCart');
+            Route::get('addToCart/{id}','TodayMenuController@getAddToCart')->name('addToCart');
+            Route::get('getCartItems','TodayMenuController@getCartItems')->name('getCartItems');
+            Route::get('getReduceByOne/{id}','TodayMenuController@getReduceByOne')->name('reduceByOne');
+            Route::get('remove/{id}','TodayMenuController@getRemoveItem')->name('remove');
         });
         
     });

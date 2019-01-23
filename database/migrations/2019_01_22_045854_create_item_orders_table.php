@@ -20,6 +20,7 @@ class CreateItemOrdersTable extends Migration
             $table->unsignedInteger('food_items_id');
             $table->foreign('food_items_id')->references('id')->on('food_items')->onDelete('cascade');
             $table->integer('quantity');
+            $table->string('totalPrice');
             $table->timestamps();
         });
     }
