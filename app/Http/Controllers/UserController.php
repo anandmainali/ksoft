@@ -27,9 +27,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-       
-        $users = User::where('id','<>',auth()->id())->get(); 
+    {       
+        $users = User::where('id','<>',auth()->id())->get();        
         return view($this->path.'index',compact('users'));
     }
 
@@ -59,6 +58,7 @@ class UserController extends Controller
             'password' => 'required|min:5|max:30|confirmed',
             'image' => 'image|max:1000',
             'status' => '',
+            'roles' => 'required'
         ]);
 
         $data = [
@@ -150,7 +150,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => $request->password != null ? 'sometimes|required|min:5|max:30|confirmed' : '',
             'image' => 'image|max:1000',
-            'status' => ''
+            'status' => '',
+            'roles' => 'required'
         ]);        
             
         $data = [

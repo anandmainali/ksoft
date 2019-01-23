@@ -17,8 +17,8 @@ class CreateItemOrdersTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedInteger('menu_items_id');
-            $table->foreign('menu_items_id')->references('id')->on('menu_items')->onDelete('cascade');
+            $table->unsignedInteger('food_items_id');
+            $table->foreign('food_items_id')->references('id')->on('food_items')->onDelete('cascade');
             $table->integer('quantity');
             $table->timestamps();
         });

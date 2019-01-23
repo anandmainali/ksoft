@@ -9,7 +9,7 @@
       </div>
       <div class="pull-left info">
         <p>{{ucfirst(auth::user()->name)}}</p>
-        <i class="fa fa-circle text-success"></i> Online
+        <i class="fa fa-circle text-success"></i> {{Auth::user()->roles()->pluck('name')->implode(', ')}}
       </div>
     </div>
 
@@ -21,19 +21,43 @@
                 <i class="fa fa-home"></i> <span>Home</span>                
               </a>
       </li>
-
+      @if(Auth::user()->roles()->pluck('name')->implode(', ') == 'Kitchen Staff')
       <li>
-        <a href="">
-          <i class="fa fa-list-alt"></i> <span>Item Menu</span>                
+        <a href="{{route('admin.category.index')}}">
+          <i class="fa fa-list-alt"></i> <span>Categories</span>                
         </a>
       </li>
       <li>
-        <a href="">
-          <i class="fa fa-bullhorn"></i> <span>Orders</span>                
+        <a href="{{route('admin.foodItem.index')}}">
+          <i class="fa fa-list-alt"></i> <span>Food Items</span>                
         </a>
       </li>
+      <li>
+          <a href="{{route('admin.getItems')}}">
+            <i class="fa fa-list-alt"></i> <span>Set Today Menu</span>                
+          </a>
+        </li>
+        @endif
+        @if(Auth::user()->roles()->pluck('name')->implode(', ') == 'Employee')
+        <li>
+            <a href="{{route('admin.viewTodayMenu')}}">
+              <i class="fa fa-list-alt"></i> <span>Today Menu</span>                
+            </a>
+        </li>
+          @endif
       
-      
+      @if(Auth::user()->roles()->pluck('name')->implode(', ') == 'Admin')
+      <li>
+          <a href="">
+            <i class="fa fa-bullhorn"></i> <span>Menus History</span>                
+          </a>
+        </li>
+      <li>
+      <li>
+          <a href="">
+            <i class="fa fa-bullhorn"></i> <span>Orders History</span>                
+          </a>
+        </li>
       <li>
         <a href="{{route('admin.companyEmail.index')}}">
           <i class="fa fa-envelope-o"></i> <span> Private Emails</span>                
@@ -44,6 +68,7 @@
           <i class="fa fa-users"></i> <span>Users</span>                
         </a>
       </li>
+      @endif
     
 
 

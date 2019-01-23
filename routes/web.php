@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('dashboard.auth.login');
-})->name('/');
+})->name('/')->middleware('guest');
 
 Route::get('/home', function(){
     return view('dashboard.pages.home');
@@ -49,12 +49,19 @@ Route::group(['middleware' => 'auth','prefix' => config('dashboard.prefix')], fu
             //Private Emails Resource
             Route::resource('companyEmail', 'CompanyPrivateEmailController');
 
+            //Category Resource
+            Route::resource('category', 'CategoryController');
             //Menu Item Resource
-            Route::resource('menu-item', 'MenuItemController');
+            Route::resource('foodItem', 'FoodItemController');
             //Orders Resource
             Route::resource('orders', 'OrderController');
 
+            Route::get('getItems','TodayMenuController@getActiveItems')->name('getItems');
+            Route::post('setTodayMenu','TodayMenuController@setTodayMenu')->name('setTodayMenu');
+            Route::get('viewTodayMenu','TodayMenuController@viewTodayMenu')->name('viewTodayMenu');
 
+            //Cart System
+            Route::get('addToCart/{$id}','TodayMenuController@getAddToCart')->name('addToCart');
         });
         
     });

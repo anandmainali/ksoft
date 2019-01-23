@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use App\User;
 
-class AdminMiddleware
+class EmployeeMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,11 +16,10 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        
-         if (Auth::user()->roles()->pluck('name')->implode(', ') == 'Admin') 
+        if (Auth::user()->roles()->pluck('name')->implode(', ') == 'Employee') 
         {
             return $next($request);
-               
+                
         }
         abort('401');
     }

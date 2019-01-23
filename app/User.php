@@ -2,7 +2,6 @@
 
 namespace App;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -10,7 +9,7 @@ use App\Notifications\UserResetPasswordNotification;
 
 class User extends Authenticatable
 {
-    use Notifiable, softDeletes;
+    use Notifiable;
 
     protected $tables = 'users';
 
@@ -31,7 +30,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    protected $dates = ['deleted_at'];
     
 
     //Set Image Path
@@ -54,7 +52,7 @@ class User extends Authenticatable
 
     
     public function roles()
-    {        
+    {       
         return $this->belongsToMany('App\Role');
     }
     

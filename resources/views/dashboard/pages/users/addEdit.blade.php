@@ -53,6 +53,7 @@
               <div class="col-sm-8">
                   <div class="form-group">
                       {{ Form::label('role', 'Assign Role') }} <br>
+                      
                       @foreach ($roles as $role)
                       {{ Form::checkbox('roles[]',  $role->id ) }}
                       {{ Form::label($role->name, ucfirst($role->name)) }}<br>          

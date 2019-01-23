@@ -37,10 +37,12 @@
               </td>
                 <td>
                   @if($user->status)
-                    {!! Form::open(['method'=>'GET','route'=>['admin.users.show',$user->id]]) !!}     {!! Form::submit("Active", ['class'=>'btn btn-success btn-xs']) !!} 
+                    {!! Form::open(['method'=>'GET','route'=>['admin.users.show',$user->id]]) !!}     
+                    {!! Form::submit("Active", ['class'=>'btn btn-success btn-xs']) !!} 
                     {!! Form::close() !!}
                   @else
-                  {!! Form::open(['method'=>'GET','route'=>['admin.users.show',$user->id]]) !!}     {!! Form::submit("Inactive", ['class'=>'btn btn-danger btn-xs']) !!} 
+                  {!! Form::open(['method'=>'GET','route'=>['admin.users.show',$user->id]]) !!}     
+                  {!! Form::submit("Inactive", ['class'=>'btn btn-danger btn-xs']) !!} 
                     {!! Form::close() !!}
                   @endif
                 </td>
