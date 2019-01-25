@@ -12,7 +12,7 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body ">
-          <table id="example1" class="table table-bordered table-striped">
+          <table id="example" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>S.N.</th>
@@ -22,7 +22,10 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody> 
+              <tbody>
+                @if(Carbon\Carbon::now('GMT+5:45')->toTimeString() <= Carbon\Carbon::createFromTime(13, 0)->toTimeString())
+
+                @if(count($food_items) > 0)
                 @foreach($food_items as $key=>$item)
                 <tr>
                   <td>{{++$key}}</td>
@@ -32,11 +35,6 @@
                   <td>
                     
                     {!! Form::button('<i class="fa fa-eye"></i>', ['class'=>'btn btn-info btn-xs','data-toggle'=>'modal','data-target'=>'#modal-default']) !!}
-                    {{-- {!! Html::decode(link_to_action('TodayMenuController@getAddToCart', '<i class="fa fa-cart-plus"></i>',[$item->id],['class'=>'btn btn-warning btn-xs'])) !!}  --}}
-                    {{-- <form action="{{route('admin.addToCart',$item->id)}}" method="get">
-                      @csrf
-                      <button type="submit" class= 'btn btn-warning btn-xs'><i class="fa fa-cart-plus"></i></button>
-                    </form> --}}
                     <a href="{{route('admin.addToCart',[$item->id])}}" class= 'btn btn-warning btn-xs'><i class="fa fa-cart-plus"></i></a>
                     
                   </td>
@@ -67,7 +65,18 @@
                     </div>
                     <!-- /.modal-dialog -->
                   </div>     
-                  @endforeach                  
+                  @endforeach 
+                  @else
+                    <tr>
+                      <td colspan="5" style="text-align: center"><h4>Menu is not set.</h4></td>
+                    </tr>
+                  @endif
+
+                  @else
+                  <tr>
+                      <td colspan="5" style="text-align: center"><h4>Please place order before launch time.</h4></td>
+                    </tr>
+                @endif
               </tbody>
             </table>
       </div>

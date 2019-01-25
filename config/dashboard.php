@@ -13,7 +13,7 @@ return [
   |
   */
 
-  'name' => 'Admin',
+  'name' => env('SYSTEM_NAME'),
 
 
   /*
@@ -25,7 +25,7 @@ return [
     | to view the admin panel
     |
     */
-    'prefix' => 'admin',
+    'prefix' => env('SYSTEM_URL_PREFIX'),
 
 
 

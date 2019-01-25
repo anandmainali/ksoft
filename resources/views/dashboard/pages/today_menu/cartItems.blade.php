@@ -12,6 +12,7 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body ">
+          {!! Form::open(['route'=>'admin.orders.store']) !!} 
           <table id="example" class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -51,8 +52,9 @@
                   @endif
               </tbody>
             </table>       
-            @if(Session::has('cart'))
-            <a href="" class="btn btn-primary pull-right">Submit Order</a>
+            @if(Session::has('cart'))            
+            {!! Form::submit('Submit Order', ['class'=>'btn btn-primary pull-right']) !!}      
+            {!! Form::close() !!}
             @endif
       </div>
       <!-- /.box-body -->

@@ -9,19 +9,19 @@
       </div>
       <div class="pull-left info">
         <p>{{ucfirst(auth::user()->name)}}</p>
-        <i class="fa fa-circle text-success"></i> {{Auth::user()->roles()->pluck('name')->implode(', ')}}
+        <i class="fa fa-circle text-success"></i> {{Auth::user()->roles->name}}
       </div>
     </div>
 
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
-      <li class="header">MAIN NAVIGATION</li>
+      <li class="header">MAIN NAVIGATION</li>     
       <li>
         <a href="{{route('admin')}}">
                 <i class="fa fa-home"></i> <span>Home</span>                
               </a>
       </li>
-      @if(Auth::user()->roles()->pluck('name')->implode(', ') == 'Kitchen Staff')
+      @if(Auth::user()->roles->name == 'Kitchen Staff')
       <li>
         <a href="{{route('admin.category.index')}}">
           <i class="fa fa-list-alt"></i> <span>Categories</span>                
@@ -29,16 +29,21 @@
       </li>
       <li>
         <a href="{{route('admin.foodItem.index')}}">
-          <i class="fa fa-list-alt"></i> <span>Food Items</span>                
+          <i class="fa fa-circle-o"></i> <span>Food Items</span>                
         </a>
       </li>
       <li>
           <a href="{{route('admin.getItems')}}">
-            <i class="fa fa-list-alt"></i> <span>Set Today Menu</span>                
+            <i class="fa fa-check"></i> <span>Set Today Menu</span>                
           </a>
         </li>
+        <li>
+            <a href="{{route('admin.orders.index')}}">
+              <i class="fa fa-shopping-cart"></i> <span>Today Orders</span>                
+            </a>
+        </li>
         @endif
-        @if(Auth::user()->roles()->pluck('name')->implode(', ') == 'Employee')
+        @if(Auth::user()->roles->name == 'Employee')
         <li>
             <a href="{{route('admin.viewTodayMenu')}}">
               <i class="fa fa-list-alt"></i> <span>Today Menu</span>                
@@ -46,16 +51,16 @@
         </li>
           @endif
       
-      @if(Auth::user()->roles()->pluck('name')->implode(', ') == 'Admin')
+      @if(Auth::user()->roles->name == 'Admin')
       <li>
-          <a href="">
-            <i class="fa fa-bullhorn"></i> <span>Menus History</span>                
+          <a href="{{route('admin.menusHistory')}}">
+            <i class="fa  fa-history"></i> <span>Menus History</span>                
           </a>
         </li>
       <li>
       <li>
-          <a href="">
-            <i class="fa fa-bullhorn"></i> <span>Orders History</span>                
+          <a href="{{route('admin.ordersHistory')}}">
+            <i class="fa  fa-history"></i> <span>Orders History</span>                
           </a>
         </li>
       <li>

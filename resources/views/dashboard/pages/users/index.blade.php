@@ -33,8 +33,7 @@
                 <td><img src="{{$user->image}}" alt="Avatar" height="40px" width="40px" class="img-responsive img-circle"></td>
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
-                <td>{{$user->roles()->pluck('name')->implode(', ')}}
-              </td>
+                <td>{{$user->roles->name}} </td>
                 <td>
                   @if($user->status)
                     {!! Form::open(['method'=>'GET','route'=>['admin.users.show',$user->id]]) !!}     

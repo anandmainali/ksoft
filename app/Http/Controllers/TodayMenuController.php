@@ -6,20 +6,20 @@ use Illuminate\Http\Request;
 use App\Date;
 use Carbon\Carbon;
 use Brian2694\Toastr\Facades\Toastr;
-use Session;
-use App\Cart;
 
 class TodayMenuController extends Controller
 {
     private $path = 'dashboard.pages.today_menu.';
 
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware('auth');        
     }
     //Gets items to set for today menu
     public function getActiveItems(){
        $food_items = FoodItem::where('status',true)->get();
-       return view($this->path.'setTodayMenu',compact('food_items'));
+       $todayDate = Carbon::now()->toDateString();
+       $date = Date::where('date','=',$todayDate)->first();
+       return view($this->path.'setTodayMenu',compact('food_items','date'));
     }
 
     //Sets items for today menu
@@ -45,61 +45,23 @@ class TodayMenuController extends Controller
 
     public function viewTodayMenu()
     {
+        
         $todayDate = Carbon::now()->toDateString();
-         $date = Date::where('date','=',$todayDate)->firstOrFail();
-         $food_items = $date->food_items;
-        //  foreach($food_items as $item){
-        //      dd($item->id);
-        //  }
+         $date = Date::where('date','=',$todayDate)->first();
+         if($date){
+            $food_items = $date->food_items;            
+         }else{
+            $food_items = [];
+         }         
+         
         return view($this->path.'todayMenu',compact('food_items'));
     }
 
-    //Cart
-
-    public function getAddToCart(Request $request, $id)
-    {
-        $item = FoodItem::find($id);
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->add($item,$item->id);
-
-        $request->session()->put('cart', $cart);
-        //($request->session()->get('cart'));
-        return back();
+    public function menusHistory(){
+        $dates = Date::orderBy('id','DESC')->get(); 
+             
+        return view('dashboard.pages.history.menuHistory',compact('dates'));
     }
 
-    public function getCartItems()
-    {
-        if(!Session::has('cart')){
-            return view($this->path.'cartItems');
-        }
-        $oldCart = Session::get('cart');
-        $cart = new Cart($oldCart);
-        
-        return view($this->path.'cartItems',['items'=>$cart->items,'totalPrice'=> $cart->totalPrice]);
-    }
-
-    public function getReduceByOne($id) {
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->reduceByOne($id);
-        if (count($cart->items) > 0) {
-            Session::put('cart', $cart);
-        } else {
-            Session::forget('cart');
-        }
-        return back();
-    }
-    public function getRemoveItem($id) {
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->removeItem($id);
-        if (count($cart->items) > 0) {
-            Session::put('cart', $cart);
-        } else {
-            Session::forget('cart');
-        }
-        return back();
-    }
 }
 

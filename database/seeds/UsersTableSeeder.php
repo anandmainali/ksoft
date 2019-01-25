@@ -4,7 +4,6 @@ use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use App\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -23,13 +22,12 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('admin'),
                 'status' => 1,                
                 'image' => 'default.png',
+                'role_id' => 1,
                 'created_at' => Carbon::now()
             ]
             ];
         
         DB::table('users')->insert($users);
-        $user = User::findOrFail(1);
-        $user->roles()->attach(1);
 
     }
 }

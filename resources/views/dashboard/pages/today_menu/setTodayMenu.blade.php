@@ -12,6 +12,7 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body ">
+          {!! Form::open(['route'=>'admin.setTodayMenu']) !!} 
           <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -23,7 +24,7 @@
               </thead>
               <tbody>
                 @if(count($food_items) > 0)
-                {!! Form::open(['route'=>'admin.setTodayMenu']) !!} 
+                
                 @foreach($food_items as $key=>$food_item)
                 <tr>
                   <input type="hidden" name="food_items[]" value="{{$food_item->id}}">
@@ -35,8 +36,7 @@
                   <td>
                 </tr>                
                 @endforeach
-                {!! Form::submit('Submit', ['class'=>'btn btn-primary pull-right']) !!}
-                  {!! Form::close() !!}
+                
                 @else
                   <tr>
                       <td colspan="100%">
@@ -47,6 +47,13 @@
                 @endif
               </tbody>
             </table>
+            <br>
+            @if(!$date)
+            {!! Form::submit('Set Menu', ['class'=>'btn btn-primary pull-right']) !!}
+            @else
+            <h2 style="text-align: center">Menu is already set.</h2>
+            @endif
+            {!! Form::close() !!}
       </div>
       <!-- /.box-body -->
     </div>

@@ -115,7 +115,7 @@ class FoodItemController extends Controller
     {
         $item = FoodItem::findOrFail($id);
         $this->validate($request,[
-            'name' => 'required|string|min:3|max:50|unique:food_items',
+            'name' => 'required|string|min:3|max:50|unique:food_items,name,'.$id,
             'price' => 'required|numeric',
             'description' => 'nullable',
             'categories' => 'required'

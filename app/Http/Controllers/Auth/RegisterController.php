@@ -98,16 +98,14 @@ class RegisterController extends Controller
         $email = CompanyPrivateEmail::where('company_private_email',$data['email'])->first();
        
         if(isset($email)){
-              $user = User::create([
+              return $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => 
                 Hash::make($data['password']),
-                'image' => 'default.png'
+                'image' => 'default.png',
+                'role_id' => 2
             ]);
-            
-            $user->roles()->attach(2);
-            return $user;
             
 
         }else{

@@ -17,7 +17,7 @@
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-          @if(Auth::user()->roles()->pluck('name')->implode(', ') == 'Employee')
+          @if(Auth::user()->roles->name == 'Employee')
           <!-- Notifications: style can be found in dropdown.less -->
           <li class="dropdown notifications-menu">
             <a href="{{ route('admin.getCartItems') }}" >
@@ -25,6 +25,34 @@
               <span class="label label-warning">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span>
             </a>
           </li>
+          <li class="dropdown notifications-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bell-o"></i>
+                @if(auth()->user()->unreadNotifications->count()>0)
+                <span class="label label-warning">                  
+                    {{auth()->user()->unreadNotifications->count()}}                  
+                </span>   
+                @endif             
+              </a>
+              <ul class="dropdown-menu" >                
+               <li>
+                  <!-- inner menu: contains the actual data -->
+                  <ul class="menu" id="menu1">
+                    @foreach(auth()->user()->unreadNotifications as $notification)
+                      <li>
+                          <a href="#">
+                            <i class="fa fa-check text-aqua"></i> {{$notification->data['data']}}
+                          </a>
+                        </li>
+                        @endforeach
+                  </ul>
+                  
+                </li>
+                @if(auth()->user()->unreadNotifications->count()>0)
+                <li class="footer"><a href="{{route('admin.markAsRead')}}">Mark All as Read</a></li> 
+                @endif
+              </ul>
+            </li>
           @endif
 
         <!-- User Account: style can be found in dropdown.less -->

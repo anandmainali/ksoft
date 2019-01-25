@@ -40,7 +40,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::where('id','<>','2')->get();
+        $roles = Role::where('id','<>','2')->pluck('name','id');
         return view($this->path.'addEdit',compact('roles'));
     }
 
@@ -58,13 +58,14 @@ class UserController extends Controller
             'password' => 'required|min:5|max:30|confirmed',
             'image' => 'image|max:1000',
             'status' => '',
-            'roles' => 'required'
+            'role_id' => 'required'
         ]);
-
+            
         $data = [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),            
+            'password' => Hash::make($request->password),  
+            'role_id' => $request->role_id          
         ];
 
         //Inserting user image
@@ -84,15 +85,6 @@ class UserController extends Controller
         }
 
         $user = User::create($data);
-
-        $roles = $request['roles']; //Retrieving the roles field
-    //Checking if a role was selected
-        if (isset($roles)) {
-            foreach ($roles as $role) {
-            $role_r = Role::where('id', '=', $role)->firstOrFail();            
-            $user->roles()->attach($role_r); //Assigning role to user
-            }
-        } 
 
         //Redirect to the users.index view and display message
         Toastr::success('User successfully added.','Success');
@@ -128,7 +120,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $roles = Role::where('id','<>','2')->get();
+        $roles = Role::where('id','<>','2')->pluck('name','id');
         $user = User::findOrFail($id);  
 
         return view($this->path.'addEdit',compact('user','roles'));
@@ -151,12 +143,13 @@ class UserController extends Controller
             'password' => $request->password != null ? 'sometimes|required|min:5|max:30|confirmed' : '',
             'image' => 'image|max:1000',
             'status' => '',
-            'roles' => 'required'
+            'role_id' => 'required'
         ]);        
             
         $data = [
             'name' => $request->name,
-            'email' => $request->email,            
+            'email' => $request->email,
+            'role_id' => $request->role_id            
         ];
 
         //Setting User status as per checkbox
@@ -181,18 +174,8 @@ class UserController extends Controller
             }
             $data['image'] = $name;
         }      
-        
-        $roles = $request['roles']; //Retreive all roles
 
         $user->update($data);
-
-        if (isset($roles)) {        
-            $user->roles()->sync($roles);  //If one or more role is selected associate user to roles          
-        }        
-        else {
-            $user->roles()->detach(); //If no role is selected remove exisiting role associated to a user
-        }
-
 
         Toastr::success('User Successfully Updated :)','Success');  
         return redirect()->route('admin.users.index');

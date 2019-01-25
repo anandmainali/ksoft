@@ -50,17 +50,15 @@
               {!! Form::file('image', ['class'=>'form-control']) !!}            
             </div>
             <div class="row">
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                   <div class="form-group">
-                      {{ Form::label('role', 'Assign Role') }} <br>
+                      {{ Form::label('role', 'Assign Role') }}                    
                       
-                      @foreach ($roles as $role)
-                      {{ Form::checkbox('roles[]',  $role->id ) }}
-                      {{ Form::label($role->name, ucfirst($role->name)) }}<br>          
-                      @endforeach                          
+                      {!! Form::select('role_id', $roles, null, ['class'=>'form-control']) !!}
+                                              
                   </div>
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-4 col-sm-offset-1">
                   <div class="form-group">
                     {!! Form::checkbox('status', null, null, []) !!}
                       {!! Form::label('status', 'Active') !!}  

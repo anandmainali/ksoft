@@ -22,7 +22,7 @@ Route::get('/home', function(){
 Auth::routes();
 
 
-Route::group(['middleware' => 'auth','prefix' => config('dashboard.prefix')], function(){    
+    Route::group(['middleware' => 'auth','prefix' => config('dashboard.prefix')], function(){    
         Route::get('', function () {
             return view('dashboard.pages.home');
         })->name('admin');
@@ -53,18 +53,35 @@ Route::group(['middleware' => 'auth','prefix' => config('dashboard.prefix')], fu
             Route::resource('category', 'CategoryController');
             //Menu Item Resource
             Route::resource('foodItem', 'FoodItemController');
+
             //Orders Resource
             Route::resource('orders', 'OrderController');
+            
+            //Menus Related Controller
+            Route::get('getItems','TodayMenuController@getActiveItems')->middleware('isKitchenStaff')->name('getItems');
+            Route::post('setTodayMenu','TodayMenuController@setTodayMenu')->middleware('isKitchenStaff')->name('setTodayMenu');
+            Route::get('viewTodayMenu','TodayMenuController@viewTodayMenu')->middleware('isEmployee')->name('viewTodayMenu');
 
-            Route::get('getItems','TodayMenuController@getActiveItems')->name('getItems');
-            Route::post('setTodayMenu','TodayMenuController@setTodayMenu')->name('setTodayMenu');
-            Route::get('viewTodayMenu','TodayMenuController@viewTodayMenu')->name('viewTodayMenu');
+            //Menus History
+            Route::get('menusHistory','TodayMenuController@menusHistory')->middleware('isAdmin')->name('menusHistory');
+
+            //Employee Order History
+            Route::get('ordersHistory','HomeController@ordersHistory')->middleware('isAdmin')->name('ordersHistory');\
+            Route::get('orderedItems/{id}','HomeController@ordersHistoryItems')->middleware('isAdmin')->name('ordersHistoryItems');
 
             //Cart System
-            Route::get('addToCart/{id}','TodayMenuController@getAddToCart')->name('addToCart');
-            Route::get('getCartItems','TodayMenuController@getCartItems')->name('getCartItems');
-            Route::get('getReduceByOne/{id}','TodayMenuController@getReduceByOne')->name('reduceByOne');
-            Route::get('remove/{id}','TodayMenuController@getRemoveItem')->name('remove');
+            Route::get('addToCart/{id}','CartController@getAddToCart')->name('addToCart');
+            Route::get('getCartItems','CartController@getCartItems')->name('getCartItems');
+            Route::get('getReduceByOne/{id}','CartController@getReduceByOne')->name('reduceByOne');
+            Route::get('remove/{id}','CartController@getRemoveItem')->name('remove');
+
+            //Notification System
+            Route::get('notification','NotificationController@markAsRead')->name('markAsRead');
+
+            
+            
+            
+            
         });
         
     });
