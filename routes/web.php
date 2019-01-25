@@ -15,17 +15,13 @@ Route::get('/', function () {
     return view('dashboard.auth.login');
 })->name('/')->middleware('guest');
 
-Route::get('/home', function(){
-    return view('dashboard.pages.home');
-})->middleware('auth');
+Route::get('/home', 'HomeController@index');
 
 Auth::routes();
 
 
     Route::group(['middleware' => 'auth','prefix' => config('dashboard.prefix')], function(){    
-        Route::get('', function () {
-            return view('dashboard.pages.home');
-        })->name('admin');
+        Route::get('', 'HomeController@index')->name('admin');
         //Logout
         Route::get('logout',function(){
             Auth::logout();
@@ -66,8 +62,9 @@ Auth::routes();
             Route::get('menusHistory','TodayMenuController@menusHistory')->middleware('isAdmin')->name('menusHistory');
 
             //Employee Order History
-            Route::get('ordersHistory','HomeController@ordersHistory')->middleware('isAdmin')->name('ordersHistory');\
+            Route::get('ordersHistory','HomeController@ordersHistory')->middleware('isAdmin')->name('ordersHistory');
             Route::get('orderedItems/{id}','HomeController@ordersHistoryItems')->middleware('isAdmin')->name('ordersHistoryItems');
+            Route::get('allOrders','HomeController@allOrders')->middleware('isEmployee')->name('allOrders');
 
             //Cart System
             Route::get('addToCart/{id}','CartController@getAddToCart')->name('addToCart');

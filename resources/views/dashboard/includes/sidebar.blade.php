@@ -45,8 +45,8 @@
         @endif
         @if(Auth::user()->roles->name == 'Employee')
         <li>
-            <a href="{{route('admin.viewTodayMenu')}}">
-              <i class="fa fa-list-alt"></i> <span>Today Menu</span>                
+            <a href="{{route('admin.allOrders')}}">
+              <i class="fa fa-eye"></i> <span>My Orders</span>                
             </a>
         </li>
           @endif
