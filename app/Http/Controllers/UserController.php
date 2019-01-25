@@ -54,7 +54,7 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'name' => 'required|min:3|max:30',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email|unique:company_private_emails,company_private_email',
             'password' => 'required|min:5|max:30|confirmed',
             'image' => 'image|max:1000',
             'status' => '',
@@ -139,7 +139,7 @@ class UserController extends Controller
         
         $this->validate($request,[
             'name' => 'required|min:3|max:30',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email|unique:company_private_emails,company_private_email,'.$id,
             'password' => $request->password != null ? 'sometimes|required|min:5|max:30|confirmed' : '',
             'image' => 'image|max:1000',
             'status' => '',

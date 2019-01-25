@@ -36,7 +36,12 @@ class HomeController extends Controller
         $users[] = User::where('id','=',$order->user_id)->get();
         
         }
-        $users = array_unique($users);        
+        if(!empty($users)){
+            $users = array_unique($users);
+        }else{
+            $users = [];
+        }
+                
         return view('dashboard.pages.orders.orderHistory',compact('users'));
     } 
 

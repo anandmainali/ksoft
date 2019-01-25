@@ -43,7 +43,7 @@ class CompanyPrivateEmailController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'company_private_email'=>'required|email|unique:company_private_emails',
+            'company_private_email'=>'required|email|unique:company_private_emails,company_private_email|unique:users,email',
         ]);
 
         $company_private_email = $request['company_private_email'];
@@ -92,7 +92,7 @@ class CompanyPrivateEmailController extends Controller
     {
         $email = CompanyPrivateEmail::findOrFail($id);
         $this->validate($request, [
-            'company_private_email'=>'required|email|unique:company_private_emails',
+            'company_private_email'=>'required|email|unique:company_private_emails,company_private_email|unique:users,email',
         ]);
 
         $email->company_private_email = $request['company_private_email'];

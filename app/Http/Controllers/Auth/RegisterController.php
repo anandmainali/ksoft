@@ -96,7 +96,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $email = CompanyPrivateEmail::where('company_private_email',$data['email'])->first();
-       
         if(isset($email)){
               return $user = User::create([
                 'name' => $data['name'],
@@ -104,7 +103,8 @@ class RegisterController extends Controller
                 'password' => 
                 Hash::make($data['password']),
                 'image' => 'default.png',
-                'role_id' => 2
+                'role_id' => 2,
+                'company_private_email_id' => $email->id,
             ]);
             
 
