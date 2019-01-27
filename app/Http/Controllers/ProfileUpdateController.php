@@ -26,8 +26,7 @@ class ProfileUpdateController extends Controller
         ]);
         $data = [
             'name' => $request->name,
-            'email' => $request->email,        
-            
+            'email' => $request->email,           
         ];
 
         //Updating user image

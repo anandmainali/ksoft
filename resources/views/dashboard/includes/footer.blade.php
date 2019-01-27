@@ -74,14 +74,14 @@
 <script src="{{asset('dashboard/dist/js/toaster.min.js')}}"></script>
 {!! Toastr::message() !!}
 <script>
-    @if($errors->any())
+    {{--  @if($errors->any())
     @foreach($errors->all() as $error)
           toastr.error('{{ $error }}','Error',{
               closeButton:true,
               progressBar:true,
            });
     @endforeach
-@endif
+@endif  --}}
 
 </script>
 
