@@ -4,23 +4,24 @@
 
 <!-- /.login-logo -->
 <div class="login-box-body">
+
   <form method="POST" action="{{ route('login') }}">
     @csrf
-    <div class="form-group has-feedback">
-      <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"
-        placeholder="Enter Email" required autofocus>
-      <span class="glyphicon glyphicon-envelope form-control-feedback"></span> @if ($errors->has('email'))
-      <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('email') }}</strong>
-              </span> @endif
+    <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
+      <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"
+        placeholder="Enter Email" required autofocus> 
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>      
+      @if ($errors->has('email'))
+        <span class="help-block">{{ $errors->first('email') }}</span>
+        @endif
     </div>
-    <div class="form-group has-feedback">
-      <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
+    <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
+      <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' has-error' : '' }}" name="password"
         placeholder="Enter Password" required>
-      <span class="glyphicon glyphicon-lock form-control-feedback"></span> @if ($errors->has('password'))
-      <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('password') }}</strong>
-              </span> @endif
+      <span class="glyphicon glyphicon-lock form-control-feedback"></span> 
+      @if ($errors->has('password'))
+      <span class="help-block">{{ $errors->first('password') }}</span>
+       @endif
     </div>
 
     <div class="form-check">
@@ -47,15 +48,6 @@
       <!-- /.col -->
     </div>
   </form>
-
-  {{--
-  <div class="social-auth-links text-center">
-    <p>- OR -</p>
-    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-        Facebook</a>
-    <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-        Google+</a>
-  </div> --}}
   <!-- /.social-auth-links -->
   @if (Route::has('password.request'))
   <a class="btn btn-link" href="{{ route('password.request') }}">

@@ -21,9 +21,12 @@
       {!! Form::open(['route'=>'admin.category.store']) !!} 
       @endif
       <div class="box-body">
-        <div class="form-group">
+        <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
           {!! Form::label('name', 'Category Name') !!} 
           {!! Form::text('name',isset($category) ? $category->name : '',['class'=>'form-control']) !!} 
+          @if ($errors->has('name'))
+        <span class="help-block">{{ $errors->first('name') }}</span>
+        @endif
         </div>
       </div>
       <!-- /.box-body -->

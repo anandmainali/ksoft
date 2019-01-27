@@ -59,19 +59,30 @@
         <!-- /.box-header -->
         {!! Form::model(Auth::user(),['method'=>'PATCH','route'=>['admin.updateUser',Auth::user()->id],'files'=>true])!!}
               <div class="box-body">
-                <div class="form-group">
-                  {!! Form::label('name','Name')!!} 
+                <div class="form-group has-feedback {{ $errors->has('name') ? ' has-error' : '' }}">
+                  {!! Form::label('name','Name',['class'=>'control-label'])!!} 
                   {!! Form::text('name',null,['class'=>'form-control'])!!}
-                </div>
+                  <span class="glyphicon glyphicon-user form-control-feedback"></span> 
+                  @if ($errors->has('name'))
+                  <span class="help-block">{{ $errors->first('name') }}</span>
+                  @endif
+                </div>                
 
-                <div class="form-group">
+                <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
                   {!! Form::label('email','Email')!!} 
                   {!! Form::email('email',null,['class'=>'form-control'])!!}
+                  <span class="glyphicon glyphicon-envelope form-control-feedback"></span> 
+                  @if ($errors->has('email'))
+                  <span class="help-block">{{ $errors->first('email') }}</span>
+                  @endif
                 </div>
 
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('image') ? ' has-error' : '' }}">
                   {!! Form::label('image','Profile Picture')!!} 
                   {!! Form::file('image',['class'=>'form-control'])!!}
+                  @if ($errors->has('image'))
+                  <span class="help-block">{{ $errors->first('image') }}</span>
+                  @endif
                 </div>
 
                 <div class="box-footer">
@@ -94,19 +105,31 @@
               <!-- /.box-header -->
               {!! Form::open(['method'=>'POST','route'=>['admin.updatePassword',Auth::user()->id]])!!}
               <div class="box-body">
-              <div class="form-group">
+              <div class="form-group has-feedback {{ $errors->has('oldPassword') ? ' has-error' : '' }}">
                 {!! Form::label('oldPassword','Old Password')!!} 
                 {!! Form::password('oldPassword',['class'=>'form-control'])!!}
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span> 
+                @if ($errors->has('oldPassword'))
+                  <span class="help-block">{{ $errors->first('oldPassword') }}</span>
+                  @endif
               </div>
 
-              <div class="form-group">
+              <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
                 {!! Form::label('password','New Password')!!} 
                 {!! Form::password('password',['class'=>'form-control'])!!}
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span> 
+                @if ($errors->has('password'))
+                  <span class="help-block">{{ $errors->first('password') }}</span>
+                  @endif
               </div>
 
-              <div class="form-group">
+              <div class="form-group has-feedback {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                 {!! Form::label('password_confirmation','Confirm Password')!!} 
                 {!! Form::password('password_confirmation',['class'=>'form-control'])!!}
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span> 
+                @if ($errors->has('password_confirmation'))
+                  <span class="help-block">{{ $errors->first('password_confirmation') }}</span>
+                  @endif
               </div>
 
               <div class="box-footer">

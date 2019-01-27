@@ -22,17 +22,26 @@
            @else
           {!! Form::open(['route'=>'admin.foodItem.store']) !!}
           @endif
-          <div class="form-group">          
+          <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">          
           {!! Form::label('name', 'Item Name') !!}          
           {!! Form::text('name', null, ['class'=>'form-control','placeholder'=>'Enter Item name']) !!}
+          @if ($errors->has('name'))
+        <span class="help-block">{{ $errors->first('name') }}</span>
+        @endif
         </div>
-        <div class="form-group">          
+        <div class="form-group {{ $errors->has('price') ? ' has-error' : '' }}">          
           {!! Form::label('price', 'Item Price') !!}          
           {!! Form::text('price', null, ['class'=>'form-control','placeholder'=>'Enter Price']) !!}
+          @if ($errors->has('price'))
+        <span class="help-block">{{ $errors->first('price') }}</span>
+        @endif
         </div>
-        <div class="form-group">          
+        <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">          
           {!! Form::label('description', 'Item Description') !!}          
           {!! Form::textarea('description', null, ['class'=>'form-control','placeholder'=>'Enter Description']) !!}
+          @if ($errors->has('description'))
+        <span class="help-block">{{ $errors->first('description') }}</span>
+        @endif
         </div>
             <div class="row">
               <div class="col-sm-8">

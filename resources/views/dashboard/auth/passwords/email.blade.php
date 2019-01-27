@@ -12,13 +12,11 @@
     <form method="POST" action="{{ route('password.email') }}">
         @csrf
         <p>Enter email address to reset the password.</p>
-      <div class="form-group has-feedback">
+      <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
           
-          <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="Enter Email" required autofocus>
+          <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Enter Email" required autofocus>
           @if ($errors->has('email'))
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $errors->first('email') }}</strong>
-            </span>
+          <span class="help-block">{{ $errors->first('email') }}</span>
           @endif 
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
          

@@ -21,9 +21,13 @@
       {!! Form::open(['route'=>'admin.companyEmail.store']) !!} 
       @endif
       <div class="box-body">
-        <div class="form-group">
+        <div class="form-group has-feedback {{ $errors->has('company_private_email') ? ' has-error' : '' }}">
           {!! Form::label('company_private_email', 'Email') !!} 
           {!! Form::text('company_private_email',isset($email) ? $email->name : '', ['placeholder'=>'Enter email','class'=>'form-control']) !!} 
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span> 
+          @if ($errors->has('company_private_email'))
+            <span class="help-block">{{ $errors->first('company_private_email') }}</span>
+          @endif
         </div>
       </div>
       <!-- /.box-body -->
